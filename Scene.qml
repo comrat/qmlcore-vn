@@ -27,6 +27,30 @@ Activity {
 		}
 	}
 
+	handleChoice(option): {
+		const jumpTo = option.jumpTo;
+		const scenario = this.scenario;
+
+		if (!scenario) {
+			log("Scenario not found");
+			return;
+		}
+
+		if (!scenario[jumpTo]) {
+			log("can't jump to", jumpTo);
+			return;
+		}
+
+		this.currentSequence = jumpTo;
+		this.currentLine = 0;
+		this.moveNextImpl();
+
+		const callback = option.callback;
+		if (this[callback]) {
+			this[callback]();
+		}
+	}
+
 	moveNext: {
 		this.moveNextImpl();
 	}
@@ -45,7 +69,7 @@ Activity {
 
 		this.currentLine = 0;
 		this.currentSequence = entrypoint;
-		this.moveNextImpl()
+		this.moveNextImpl();
 	}
 
 	setupScene(scenario): {
