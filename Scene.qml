@@ -1,7 +1,7 @@
 Activity {
-	signal next;
 	signal finished;
 	signal triggered;
+	signal nextScene;
 	property int currentLine;
 	property string backgroundImage;
 	property string backgroundMusic;
@@ -18,11 +18,15 @@ Activity {
 		}
 
 		const subScene = scenario[this.currentSequence];
-		const lines = scenario[this.currentSequence].lines;
+		const steps = scenario[this.currentSequence].steps;
 		const currIdx = this.currentLine;
 
-		if (currIdx >= 0 && currIdx < lines.length) {
-			this.triggered(lines[currIdx]);
+		if (currIdx >= 0 && currIdx < steps.length) {
+			if (steps[currIdx].nextScene && this.manager.showScene) {
+				this.manager.showScene(steps[currIdx].nextScene)
+			} else {
+				this.triggered(steps[currIdx]);
+			}
 			++this.currentLine;
 		}
 	}
