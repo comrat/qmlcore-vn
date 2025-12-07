@@ -6,19 +6,21 @@ Activity {
 	property string backgroundImage;
 	property string backgroundMusic;
 	property string currentSequence;
+	property Object scenario;
 	anchors.fill: parent;
 
 	Background { image: parent.backgroundImage; }
 
 	moveNextImpl: {
-		const scenario = this.scenario;
+		const scenario = this.scenario.getJson();
+
 		if (!scenario) {
 			log("Scenario not found");
 			return;
 		}
 
-		const subScene = scenario[this.currentSequence];
-		const steps = scenario[this.currentSequence].steps;
+		const chapter = scenario[this.currentSequence];
+		const steps = chapter.steps;
 		const currIdx = this.currentLine;
 
 		if (currIdx >= 0 && currIdx < steps.length) {
@@ -33,7 +35,7 @@ Activity {
 
 	handleChoice(option): {
 		const jumpTo = option.jumpTo;
-		const scenario = this.scenario;
+		const scenario = this.scenario.getJson();
 
 		if (!scenario) {
 			log("Scenario not found");
@@ -59,26 +61,38 @@ Activity {
 		this.moveNextImpl();
 	}
 
-	setSequence(entrypoint): {
-		const scenario = this.scenario;
+	setChapter(chapter): {
+		const scenario = this.scenario.getJson();
 		if (!scenario) {
 			log("Scenario not found");
 			return;
 		}
 
-		if (!scenario[entrypoint]) {
-			log(entrypoint, "doesn't exist in the scenario");
+		if (!scenario[chapter]) {
+			log(chapter, "doesn't exist in the scenario");
 			return;
 		}
 
 		this.currentLine = 0;
-		this.currentSequence = entrypoint;
+		this.currentSequence = chapter;
 		this.moveNextImpl();
 	}
 
-	setupScene(scenario): {
+	setupScene: {
 		this.currentLine = 0;
 		this.currentSequence = "";
-		this.scenario = scenario;
+		if (!this.scenario) {
+			return;
+		}
+
+		this.scenario.build();
+		const scenario = this.scenario.getJson();
+		if (!this.scenario) {
+			return;
+		}
+		this.currentSequence = this.scenario.firstChapter;
+		this.setChapter(this.scenario.firstChapter)
 	}
+
+	onCompleted: { this.setupScene(); }
 }

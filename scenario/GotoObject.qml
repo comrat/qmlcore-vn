@@ -1,0 +1,3 @@
+Object {
+	property string nextScene;
+}
