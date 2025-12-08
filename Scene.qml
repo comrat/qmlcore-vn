@@ -52,8 +52,8 @@ Activity {
 		this.moveNextImpl();
 
 		const callback = option.callback;
-		if (this[callback]) {
-			this[callback]();
+		if (callback) {
+			callback();
 		}
 	}
 
@@ -91,7 +91,7 @@ Activity {
 			return;
 		}
 		this.currentSequence = this.scenario.firstChapter;
-		this.setChapter(this.scenario.firstChapter)
+		this.setChapter(this.scenario.firstChapter);
 	}
 
 	onCompleted: { this.setupScene(); }

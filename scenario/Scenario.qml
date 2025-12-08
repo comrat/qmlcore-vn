@@ -41,7 +41,8 @@ Object {
 						if (option instanceof choiceOptionType) {
 							steps[steps.length - 1].choice.options.push({
 								text: option.text,
-								jumpTo: option.jumpTo
+								jumpTo: option.jumpTo,
+								callback: $core.createSignalForwarder(option, 'choosed').bind(option)
 							});
 						}
 					}
