@@ -5,8 +5,6 @@ Rectangle {
 	property string music;
 	anchors.fill: parent;
 
-	Audio { id: bgMusic; }
-
 	Image {
 		id: bgImage;
 		anchors.fill: parent;

@@ -3,6 +3,7 @@ Activity {
 	signal triggered;
 	signal nextScene;
 	property int currentLine;
+	property bool keepPlayingMusicAfter: true;
 	property string backgroundImage;
 	property string backgroundMusic;
 	property string currentSequence;
@@ -92,6 +93,18 @@ Activity {
 		}
 		this.currentSequence = this.scenario.firstChapter;
 		this.setChapter(this.scenario.firstChapter);
+	}
+
+	onStopped: {
+		if (this.backgroundMusic && !this.keepPlayingMusicAfter) {
+			this.manager.pauseMusic();
+		}
+	}
+
+	onStarted: {
+		if (this.backgroundMusic) {
+			this.manager.playMusic(this.backgroundMusic);
+		}
 	}
 
 	onCompleted: { this.setupScene(); }
