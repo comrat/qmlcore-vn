@@ -7,6 +7,7 @@ Rectangle {
 	property color titleColor: "#81C784";
 
 	property string text;
+	property int textTypedDelay: 0;
 	property int textFontFamily: "Roboto Regular";
 	property int textFontSize: 21s;
 	property color textColor: "#ffffff";
@@ -30,19 +31,21 @@ Rectangle {
 		font.pixelSize: parent.titleFontSize;
 	}
 
-	Text {
+	TypewriterText {
 		id: dialogText;
 		x: dialogTitle.x;
+		width: 300s;
 		anchors.top: dialogTitle.bottom;
 		anchors.topMargin: 10s;
 		color: parent.textColor;
 		font.family: parent.textFontFamily;
 		font.pixelSize: parent.textFontSize;
+		delay: parent.textTypedDelay;
 	}
 
 	setText(title, text, textColor): {
 		dialogTitle.text = title;
-		dialogText.text = text;
+		dialogText.typedText = text;
 		if (textColor) {
 			this.titleColor = textColor;
 		}
