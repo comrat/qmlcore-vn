@@ -10,7 +10,14 @@ Activity {
 	property Object scenario;
 	anchors.fill: parent;
 
-	Background { image: parent.backgroundImage; }
+	SceneBackground {
+		image: parent.backgroundImage;
+
+		onLoaded: {
+			const manager = this.parent.manager;
+			manager.hideFade();
+		}
+	}
 
 	moveNextImpl: {
 		const scenario = this.scenario.getJson();
@@ -93,6 +100,11 @@ Activity {
 		}
 		this.currentSequence = this.scenario.firstChapter;
 		this.setChapter(this.scenario.firstChapter);
+	}
+
+	stopImpl: {
+		this.active = false;
+		this.stopped();
 	}
 
 	onStopped: {
