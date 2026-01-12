@@ -7,9 +7,10 @@ ActivityManager {
 
 	Audio {
 		id: bgMusic;
-		autoPlay: true;
 		loop: true;
 	}
+
+	Audio { id: sound; }
 
 	SceneFade {
 		id: sceneFade;
@@ -26,6 +27,16 @@ ActivityManager {
 			}.bind(this))
 		} else {
 			this.replaceTopActivity(scene, data);
+		}
+	}
+
+	playSound(url): {
+		if (sound.ready) {
+			return;
+		} else if (sound.source === url) {
+			sound.play();
+		} else {
+			sound.source = url;
 		}
 	}
 
