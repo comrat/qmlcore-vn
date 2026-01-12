@@ -1,4 +1,5 @@
 Rectangle {
+	signal typeWriterTriggered;
 	property string image;
 
 	property string title;
@@ -41,6 +42,8 @@ Rectangle {
 		font.family: parent.textFontFamily;
 		font.pixelSize: parent.textFontSize;
 		delay: parent.textTypedDelay;
+
+		onTriggered: { this.parent.typeWriterTriggered(); }
 	}
 
 	setText(title, text, textColor): {

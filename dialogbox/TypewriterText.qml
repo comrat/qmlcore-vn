@@ -1,5 +1,6 @@
 Text {
 	id: typewriterProto;
+	signal triggered;
 	property int delay;
 	property string typedText;
 	width: 200s;
@@ -12,6 +13,7 @@ Text {
 		onTriggered: {
 			if (typewriterProto._currentIndex < typewriterProto.typedText.length) {
 				typewriterProto.addNextLetter();
+				typewriterProto.triggered();
 			}
 		}
 	}
