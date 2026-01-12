@@ -4,7 +4,7 @@ Object {
 	build: {
 		const chapterType = _globals.qmlcore_vn.scenario.Chapter;
 		const textLineType = _globals.qmlcore_vn.scenario.TextLine;
-		const gotoType = _globals.qmlcore_vn.scenario.GotoObject;
+		const jumpToType = _globals.qmlcore_vn.scenario.JumpTo;
 		const choiceType = _globals.qmlcore_vn.scenario.Choice;
 		const choiceOptionType = _globals.qmlcore_vn.scenario.ChoiceOption;
 
@@ -27,7 +27,7 @@ Object {
 						text: token.text,
 						character: token.character
 					});
-				} else if (token instanceof gotoType) {
+				} else if (token instanceof jumpToType) {
 					scenario[chapter.title].steps.push({
 						nextScene: token.nextScene
 					});
