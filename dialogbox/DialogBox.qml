@@ -12,6 +12,7 @@ Rectangle {
 	property int textFontFamily: "Roboto Regular";
 	property int textFontSize: 21s;
 	property color textColor: "#ffffff";
+
 	width: 100%;
 	height: 30%;
 	anchors.bottom: parent.bottom;
@@ -46,11 +47,16 @@ Rectangle {
 		onTriggered: { this.parent.typeWriterTriggered(); }
 	}
 
-	setText(title, text, textColor): {
-		dialogTitle.text = title;
-		dialogText.typedText = text;
-		if (textColor) {
-			this.titleColor = textColor;
+	setText(props): {
+		dialogTitle.text = props.title || '';
+		dialogText.typedText = props.text || '';
+
+		if (props.titleColor) {
+			this.titleColor = props.titleColor;
+		}
+
+		if (props.textColor) {
+			this.textColor = props.textColor;
 		}
 	}
 
